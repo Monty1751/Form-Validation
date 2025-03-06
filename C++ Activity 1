@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Account {
+private:
+    string accountId;
+    double balance;
+    string customerName;
+
+public:
+    Account(string id = "0000", double bal = 0.0, string name = "Unknown") 
+        : accountId(id), balance(bal), customerName(name) {}
+
+    void displayDetails() const {
+        cout << "Account ID: " << accountId << endl;
+        cout << "Customer Name: " << customerName << endl;
+        cout << "Balance: $" << balance << endl;
+        cout << "-----------------------------" << endl;
+    }
+
+    void inputDetails() {
+        cout << "Enter Account ID: ";
+        cin >> accountId;
+        cout << "Enter Customer Name: ";
+        cin.ignore();
+        getline(cin, customerName);
+        cout << "Enter Initial Balance: ";
+        cin >> balance;
+    }
+};
+
+int main() {
+    const int MAX_ACCOUNTS = 100;
+    Account accounts[MAX_ACCOUNTS];
+    int numAccounts = 0;
+    char choice;
+
+    do {
+        cout << "1. Add Account\n2. Display All Accounts\n3. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case '1': {
+                if (numAccounts < MAX_ACCOUNTS) {
+                    accounts[numAccounts].inputDetails();
+                    numAccounts++;
+                } else {
+                    cout << "Maximum number of accounts reached!" << endl;
+                }
+                break;
+            }
+            case '2': {
+                if (numAccounts > 0) {
+                    cout << "\nAccount Details:\n";
+                    for (int i = 0; i < numAccounts; i++) {
+                        accounts[i].displayDetails();
+                    }
+                } else {
+                    cout << "No accounts to display!" << endl;
+                }
+                break;
+            }
+            case '3': {
+                cout << "Exiting the program..." << endl;
+                break;
+            }
+            default: {
+                cout << "Invalid choice! Please try again." << endl;
+                break;
+            }
+        }
+    } while (choice != '3');
+
+    return 0;
+}
